@@ -477,9 +477,22 @@ export const taxonomicFilterLogic = kea<taxonomicFilterLogicType>([
                         searchPlaceholder: 'sessions',
                         type: TaxonomicFilterGroupType.Sessions,
                         options: [
+                            // Ideally these would be pulled from the back end rather than hard-coded
                             {
                                 name: 'Session duration',
                                 value: '$session_duration',
+                            },
+                            {
+                                name: 'Start Timestamp',
+                                value: '$start_timestamp',
+                            },
+                            {
+                                name: 'Entry URL',
+                                value: '$entry_url',
+                            },
+                            {
+                                name: 'Exit URL',
+                                value: '$exit_url',
                             },
                         ],
                         getName: (option: any) => option.name,

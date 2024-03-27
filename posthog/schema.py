@@ -816,7 +816,7 @@ class SessionPropertyFilter(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    key: Literal["$session_duration"] = "$session_duration"
+    key: str
     label: Optional[str] = None
     operator: PropertyOperator
     type: Literal["session"] = "session"
@@ -1656,7 +1656,7 @@ class WebAnalyticsQueryBase(BaseModel):
         extra="forbid",
     )
     dateRange: Optional[DateRange] = None
-    properties: List[Union[EventPropertyFilter, PersonPropertyFilter]]
+    properties: List[Union[EventPropertyFilter, PersonPropertyFilter, SessionPropertyFilter]]
     sampling: Optional[Sampling] = None
     useSessionsTable: Optional[bool] = None
 
@@ -1668,7 +1668,7 @@ class WebOverviewQuery(BaseModel):
     compare: Optional[bool] = None
     dateRange: Optional[DateRange] = None
     kind: Literal["WebOverviewQuery"] = "WebOverviewQuery"
-    properties: List[Union[EventPropertyFilter, PersonPropertyFilter]]
+    properties: List[Union[EventPropertyFilter, PersonPropertyFilter, SessionPropertyFilter]]
     response: Optional[WebOverviewQueryResponse] = None
     sampling: Optional[Sampling] = None
     useSessionsTable: Optional[bool] = None
@@ -1685,7 +1685,7 @@ class WebStatsTableQuery(BaseModel):
     includeScrollDepth: Optional[bool] = None
     kind: Literal["WebStatsTableQuery"] = "WebStatsTableQuery"
     limit: Optional[int] = None
-    properties: List[Union[EventPropertyFilter, PersonPropertyFilter]]
+    properties: List[Union[EventPropertyFilter, PersonPropertyFilter, SessionPropertyFilter]]
     response: Optional[WebStatsTableQueryResponse] = None
     sampling: Optional[Sampling] = None
     useSessionsTable: Optional[bool] = None
@@ -1697,7 +1697,7 @@ class WebTopClicksQuery(BaseModel):
     )
     dateRange: Optional[DateRange] = None
     kind: Literal["WebTopClicksQuery"] = "WebTopClicksQuery"
-    properties: List[Union[EventPropertyFilter, PersonPropertyFilter]]
+    properties: List[Union[EventPropertyFilter, PersonPropertyFilter, SessionPropertyFilter]]
     response: Optional[WebTopClicksQueryResponse] = None
     sampling: Optional[Sampling] = None
     useSessionsTable: Optional[bool] = None
