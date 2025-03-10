@@ -85,7 +85,7 @@ export async function pollForResults(
 async function executeQuery<N extends DataNode>(
     queryNode: N,
     methodOptions?: ApiMethodOptions,
-    refresh?: boolean,
+    refresh?: RefreshType,
     queryId?: string,
     setPollResponse?: (response: QueryStatus) => void,
     filtersOverride?: DashboardFilter | null,
@@ -102,8 +102,11 @@ async function executeQuery<N extends DataNode>(
     const currentTeamId = teamLogic.findMounted()?.values.currentTeamId
 
     if (!pollOnly) {
-        const refreshParam: RefreshType | undefined =
-            refresh && isAsyncQuery ? 'force_async' : isAsyncQuery ? 'async' : refresh
+        const refreshParam: RefreshType | undefined = isAsyncQuery
+            ? refresh === true
+                ? 'force_async'
+                : 'async'
+            : refresh
 
         if (useOptimizedPolling) {
             return new Promise((resolve, reject) => {
@@ -116,6 +119,7 @@ async function executeQuery<N extends DataNode>(
                         Accept: 'text/event-stream',
                         'X-CSRFToken': getCookie('posthog_csrftoken') || '',
                     },
+                    openWhenHidden: true,
                     body: JSON.stringify({
                         query: queryNode,
                         client_query_id: queryId,
@@ -158,6 +162,7 @@ async function executeQuery<N extends DataNode>(
                     onerror(err) {
                         abortController.abort()
                         reject(err)
+                        throw err // make sure fetchEventSource doesn't attempt to retry
                     },
                 }).catch(reject)
             })
@@ -228,7 +233,7 @@ function logQueryEvent(type: LogType, data: any, queryNode: any): void {
 export async function performQuery<N extends DataNode>(
     queryNode: N,
     methodOptions?: ApiMethodOptions,
-    refresh?: boolean,
+    refresh?: RefreshType,
     queryId?: string,
     setPollResponse?: (status: QueryStatus) => void,
     filtersOverride?: DashboardFilter | null,
