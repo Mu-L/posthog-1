@@ -12,6 +12,7 @@ import {
 
 export const SURVEY_EVENT_NAME = 'survey sent'
 export const SURVEY_RESPONSE_PROPERTY = '$survey_response'
+export const SURVEY_PAGE_SIZE = 100
 
 export const SurveyQuestionLabel: Record<SurveyQuestionType, string> = {
     [SurveyQuestionType.Open]: 'Freeform text',
@@ -324,3 +325,7 @@ export const WEB_SAFE_FONTS = [
     { value: 'Georgia', label: 'Georgia' },
     { value: 'Courier New', label: 'Courier New' },
 ] as const
+
+export const NPS_DETRACTOR_LABEL = 'Detractors'
+export const NPS_PASSIVE_LABEL = 'Passives'
+export const NPS_PROMOTER_LABEL = 'Promoters'
