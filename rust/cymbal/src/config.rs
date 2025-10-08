@@ -39,8 +39,8 @@ pub struct Config {
     #[envconfig(default = "clickhouse_ingestion_warnings")]
     pub ingestion_warnings_topic: String,
 
-    #[envconfig(default = "error_tracking_new_fingerprints")]
-    pub new_fingerprints_topic: String,
+    #[envconfig(default = "document_embeddings_input")]
+    pub embedding_worker_topic: String,
 
     pub embedding_enabled_team_id: Option<i32>,
 
@@ -49,6 +49,9 @@ pub struct Config {
 
     #[envconfig(default = "postgres://posthog:posthog@localhost:5432/posthog")]
     pub database_url: String,
+
+    #[envconfig(default = "postgres://posthog:posthog@localhost:5432/posthog")]
+    pub persons_url: String,
 
     // Rust service connect directly to postgres, not via pgbouncer, so we keep this low
     #[envconfig(default = "4")]
